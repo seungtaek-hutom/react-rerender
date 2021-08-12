@@ -9,8 +9,9 @@ const values = Array.from(Array(valueCount)).map((_, index) => index.toString())
 function App() {
   const [checkedSet, setCheckedSet] = useState(new Set());
 
-  const handleCheck = useCallback((e, value) => {
-    const checked = e.target.checked
+  const handleCheck = useCallback(e => {
+    const checked = e.target.checked;
+    const value = e.target.value;
     checked
       ? setCheckedSet(prev => {
         prev.add(value);
@@ -22,25 +23,24 @@ function App() {
       });
   }, []);
 
-  function renderList() {
-    return values.map(value => {
-      return (
-        <ListItem key={value}>
-          <Checkbox
-            checked={checkedSet.has(value)}
-            onChange={e => handleCheck(e, value)}
-          />
-          {value}
-        </ListItem>
-      );
-    });
-  }
+  const list = values.map(value => {
+    return (
+      <ListItem key={value}>
+        <Checkbox
+          value={value}
+          checked={checkedSet.has(value)}
+          onChange={handleCheck}
+        />
+        {value}
+      </ListItem>
+    );
+  });
 
   return (
     <div className="App">
       <div id="container-list">
         <List>
-          {renderList()}
+          {list}
         </List>
       </div>
     </div>
