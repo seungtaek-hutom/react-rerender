@@ -3,40 +3,44 @@ import React, { useState } from 'react'
 import Checkbox from './components/checkbox';
 import { List, ListItem } from './components/list';
 
-const numbers = Array.from(Array(100)).map((value, index) => index);
+const valueCount = 100;
+const values = Array.from(Array(valueCount)).map((value, index) => index);
 
 function App() {
   const [checkedSet, setCheckedSet] = useState(new Set());
 
-  const handleCheck = (e, number) => {
-    if (e.target.checked) {
-      setCheckedSet(prev => {
-        prev.add(number);
+  const handleCheck = (e, value) => {
+    const checked = e.target.checked
+    checked
+      ? setCheckedSet(prev => {
+        prev.add(value);
+        return new Set(prev);
+      })
+      : setCheckedSet(prev => {
+        prev.delete(value);
         return new Set(prev);
       });
-    } else {
-      setCheckedSet(prev => {
-        prev.delete(number);
-        return new Set(prev);
-      });
-    }
   };
+
+  function renderList() {
+    return values.map(value => {
+      return (
+        <ListItem key={value}>
+          <Checkbox
+            checked={checkedSet.has(value)}
+            onChange={e => handleCheck(e, value)}
+          />
+          {value}
+        </ListItem>
+      );
+    });
+  }
 
   return (
     <div className="App">
       <div id="container-list">
         <List>
-          {numbers.map(number => {
-            return (
-              <ListItem key={number}>
-                <Checkbox
-                  checked={checkedSet.has(number)}
-                  onChange={e => handleCheck(e, number)}
-                />
-                {number}
-              </ListItem>
-            )
-          })}
+          {renderList()}
         </List>
       </div>
     </div>
