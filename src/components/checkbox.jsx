@@ -4,4 +4,4 @@ const Checkbox = ({ ...rest }) => {
   return <input type="checkbox" {...rest}></input>
 }
 
-export default Checkbox;
+export default React.memo(Checkbox);
