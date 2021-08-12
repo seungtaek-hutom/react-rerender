@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import Checkbox from './components/checkbox';
 import { List, ListItem } from './components/list';
 
@@ -9,7 +9,7 @@ const values = Array.from(Array(valueCount)).map((_, index) => index.toString())
 function App() {
   const [checkedSet, setCheckedSet] = useState(new Set());
 
-  const handleCheck = (e, value) => {
+  const handleCheck = useCallback((e, value) => {
     const checked = e.target.checked
     checked
       ? setCheckedSet(prev => {
@@ -20,7 +20,7 @@ function App() {
         prev.delete(value);
         return new Set(prev);
       });
-  };
+  }, []);
 
   function renderList() {
     return values.map(value => {
