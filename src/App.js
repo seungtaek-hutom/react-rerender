@@ -4,7 +4,7 @@ import Checkbox from './components/checkbox';
 import { List, ListItem } from './components/list';
 
 const valueCount = 100;
-const values = Array.from(Array(valueCount)).map((value, index) => index);
+const values = Array.from(Array(valueCount)).map((_, index) => index.toString());
 
 function App() {
   const [checkedSet, setCheckedSet] = useState(new Set());
