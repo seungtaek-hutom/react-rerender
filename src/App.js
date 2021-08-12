@@ -22,25 +22,23 @@ function App() {
       });
   };
 
-  function renderList() {
-    return values.map(value => {
-      return (
-        <ListItem key={value}>
-          <Checkbox
-            checked={checkedSet.has(value)}
-            onChange={e => handleCheck(e, value)}
-          />
-          {value}
-        </ListItem>
-      );
-    });
-  }
+  const list = values.map(value => {
+    return (
+      <ListItem key={value}>
+        <Checkbox
+          checked={checkedSet.has(value)}
+          onChange={e => handleCheck(e, value)}
+        />
+        {value}
+      </ListItem>
+    );
+  });
 
   return (
     <div className="App">
       <div id="container-list">
         <List>
-          {renderList()}
+          {list}
         </List>
       </div>
     </div>
